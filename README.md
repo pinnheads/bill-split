@@ -4,7 +4,7 @@ This is a simple application to split bills between multiple people. Where few i
 The app can then calculate the split and show how much each person owes.
 
 ## ToDo's
-- [ ] Add the screen to add persons to split between
+- [x] Add the screen to add persons to split between
 - [ ] Add the screen to upload receipt image(s)
 - [ ] Add the screen to that shows each item as a list
 - [ ] Add the calculation logic
