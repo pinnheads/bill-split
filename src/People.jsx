@@ -15,7 +15,6 @@ export default function People({ people, setPeople }) {
 
         setPeople(prev => {
             const next = [...prev, { id: newId(), name }];
-            console.log("People: ", next);
             return next;
         })
         setPerson(newPerson)

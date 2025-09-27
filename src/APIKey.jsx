@@ -1,14 +1,25 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useApiKey } from "./ApiKeyProvider";
+import { validateApiKey } from "./api";
+import { useNotification } from "./NotificationProvider";
 
 export default function ApiKey() {
 
     const { apiKey, setApiKey, clearApiKey } = useApiKey();
+    const { showNotification, hideNotification } = useNotification();
     const [key, setKey] = useState(apiKey || "");
 
-    const handleSubmit = () => {
-        setApiKey(key.trim());
+    const handleSubmit = async () => {
+        const response = await validateApiKey(key.trim());
+        if (response) {
+            hideNotification();
+            showNotification('API Key validated successfully!', 'success')
+            setApiKey(key.trim());
+        } else {
+            hideNotification();
+            showNotification('API Key validation failed!!', 'error')
+        }
     }
 
     useEffect(() => {

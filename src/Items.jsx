@@ -16,7 +16,6 @@ export default function Items({ items, setItems, people }) {
 
     const addItem = ({ name, price, assignedTo }) => {
         setItems(prev => [...prev, { id: newId(), name, price, assignedTo }])
-        console.log(items)
     }
 
     const updateItem = (idToUpdate, updatedField) => {
@@ -29,7 +28,6 @@ export default function Items({ items, setItems, people }) {
     }
 
     const removeItem = (idToDelete) => {
-        console.log(idToDelete, items)
         setItems(prev => prev.filter(p => p.id !== idToDelete))
     }
 
