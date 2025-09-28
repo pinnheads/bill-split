@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useApiKey } from "./ApiKeyProvider";
-import { validateApiKey } from "./api";
-import { useNotification } from "./NotificationProvider";
+
+import { useApiKey } from "../Context/ApiKeyProvider";
+import { validateApiKey } from "../API/api";
+import { useNotification } from "../Context/NotificationProvider";
 
 export default function ApiKey() {
 

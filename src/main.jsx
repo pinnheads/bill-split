@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import { ApiKeyProvider } from './ApiKeyProvider.jsx'
+import { ApiKeyProvider } from './Context/ApiKeyProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>

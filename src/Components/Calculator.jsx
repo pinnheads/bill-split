@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import People from "./People";
-import Upload from "./Upload.jsx";
-import Items from "./Items.jsx";
-import ResultsModal from "./ResultsModal.jsx";
+import Upload from "./Upload";
+import Items from "./Items";
+import ResultsModal from "./ResultsModal";
 
-import { useApiKey } from "./ApiKeyProvider.jsx";
-import { callVisionApi } from "./api.js";
-import { newId } from "./utils.js";
+import { useApiKey } from "../Context/ApiKeyProvider";
+import { callVisionApi } from "../API/api";
+import { newId } from "../Utils/utils.js";
 
 export default function Calculator() {
 

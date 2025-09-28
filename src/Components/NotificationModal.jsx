@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNotification } from './NotificationProvider';
+import { useNotification } from '../Context/NotificationProvider';
 
 export default function NotificationModal() {
     const { notification, hideNotification } = useNotification();

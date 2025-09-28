@@ -1,9 +1,9 @@
 import './App.css'
-import APIKey from './APIKey'
-import Calculator from './Calculator'
-import NotificationModal from './NotificationModal'
-import { useApiKey } from './ApiKeyProvider'
-import { NotificationProvider } from './NotificationProvider'
+import APIKey from './Components/APIKey'
+import Calculator from './Components/Calculator'
+import NotificationModal from './Components/NotificationModal'
+import { useApiKey } from './Context/ApiKeyProvider'
+import { NotificationProvider } from './Context/NotificationProvider'
 
 function App() {
     const { apiKey } = useApiKey();

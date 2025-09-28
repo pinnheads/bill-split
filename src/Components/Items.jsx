@@ -2,7 +2,7 @@ import React from "react";
 
 import ItemRow from "./ItemRow";
 
-import { newId } from "./utils";
+import { newId } from "../Utils/utils";
 
 export default function Items({ items, setItems, people }) {
 

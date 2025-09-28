@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { fileToBase64, newId } from './utils';
+import { fileToBase64, newId } from '../Utils/utils';
 
 export default function Upload({ files, setFiles, processFiles }) {
     const removeFile = (fileName) => {

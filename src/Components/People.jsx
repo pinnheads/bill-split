@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { newId } from './utils';
+import { newId } from '../Utils/utils';
 
 export default function People({ people, setPeople }) {
 
