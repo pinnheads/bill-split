@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 
+import { newId } from './utils';
+
 export default function People({ people, setPeople }) {
 
     const newPerson = { name: "" }
     const [person, setPerson] = useState(newPerson);
-
-    const newId = () => {
-        return (window.crypto?.randomUUID?.() ?? String(Date.now()));
-    }
 
     const handleAddPerson = () => {
         const name = person.name.trim();

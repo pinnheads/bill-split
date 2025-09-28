@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import People from "./People";
 import Upload from "./Upload.jsx";
@@ -6,6 +6,8 @@ import Items from "./Items.jsx";
 import ResultsModal from "./ResultsModal.jsx";
 
 import { useApiKey } from "./ApiKeyProvider.jsx";
+import { callVisionApi } from "./api.js";
+import { newId } from "./utils.js";
 
 export default function Calculator() {
 
@@ -13,6 +15,7 @@ export default function Calculator() {
     const [files, setFiles] = useState([]);
     const [items, setItems] = useState([]);
     const [results, setResults] = useState(null);
+    let currency = '';
 
     const { apiKey, clearApiKey } = useApiKey();
     const maskedKey = apiKey.length > 3
@@ -21,6 +24,31 @@ export default function Calculator() {
 
     const closeModal = () => {
         setResults(null)
+    }
+
+    async function fetchData() {
+        try {
+            files.map(async (file) => {
+                const response = await callVisionApi(file.data, apiKey);
+
+                if (response.currency) {
+                    currency = response.currency;
+                }
+
+                response.items.map((item) => {
+                    setItems(prev => [...prev, {
+                        id: newId(),
+                        name: item.name || 'Unnamed Item',
+                        price: typeof item.price === 'number' ? item.price : 0,
+                        assignedTo: ''
+                    }])
+                })
+                setFiles(prev => prev.filter(f => f.id !== file.id))
+            })
+        } catch (error) {
+            console.error("Error processing receipt: ", error);
+            return
+        }
     }
 
     const calculateSplit = () => {
@@ -55,7 +83,7 @@ export default function Calculator() {
                 <button type="button" className="bg-indian-red/20 text-indian-red p-1 text-sm rounded-sm" onClick={clearApiKey}>Clear</button>
             </div>
             <People people={people} setPeople={setPeople} />
-            {apiKey ? <Upload files={files} setFiles={setFiles} /> : <></>}
+            {apiKey ? <Upload files={files} setFiles={setFiles} processFiles={fetchData} /> : <></>}
             <Items items={items} setItems={setItems} people={people} />
             <div className="text-center">
                 <button onClick={calculateSplit} className="w-full bg-indian-red/20 text-indian-red font-bold text-lg px-8 py-3 rounded-lg hover:bg-indian-red/30 transition-all">

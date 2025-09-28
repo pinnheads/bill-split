@@ -2,16 +2,14 @@ import React from "react";
 
 import ItemRow from "./ItemRow";
 
+import { newId } from "./utils";
+
 export default function Items({ items, setItems, people }) {
 
     const newManualItem = {
         name: '',
         price: '',
         assignedTo: ''
-    }
-
-    const newId = () => {
-        return (window.crypto?.randomUUID?.() ?? String(Date.now()));
     }
 
     const addItem = ({ name, price, assignedTo }) => {
@@ -37,7 +35,10 @@ export default function Items({ items, setItems, people }) {
             <div className="bg-gray-50 p-6 rounded-lg space-y-4">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl font-semibold text-charcoal">3. Add Items</h2>
-                    <button onClick={() => addItem(newManualItem)} className="text-sm bg-yellow-green text-charcoal font-bold px-3 py-1 rounded-md hover:bg-charcoal/30">+</button>
+                    <div className="flex gap-2">
+                        <button onClick={() => setItems([])} className="text-sm bg-indian-red/20 text-indian-red font-bold px-3 py-1 rounded-md hover:bg-charcoal/30">Clear</button>
+                        <button onClick={() => addItem(newManualItem)} className="text-sm bg-yellow-green text-charcoal font-bold px-3 py-1 rounded-md hover:bg-charcoal/30">+</button>
+                    </div>
                 </div>
                 {items.length ?
                     items.map(item => <ItemRow item={item} people={people} onUpdate={updateItem} onRemove={removeItem} />)
