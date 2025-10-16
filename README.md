@@ -16,7 +16,7 @@ The app can then calculate the split and show how much each person owes.
   - ability to update detected items name and price
   - ability to **add manual items**
   - ability to **delete items**
-- Users can ***add or remove** people who are part of the bill split.
+- Users can **add or remove** people who are part of the bill split.
 - **Accurate cost calculation** and presents a **clear summary of how much each person owes**.
 - API Key Validation
 - Responsive Design
@@ -28,8 +28,6 @@ git clone git@github.com:pinnheads/bill-split.git
 cd bill-split
 npm install
 npm run dev
-```
-```
 ```
 
 ## ToDo's
@@ -46,10 +44,12 @@ npm run dev
 ## Challenges and Learnings
 
 ### Initial OCR Inaccuracy
+
   - **Problem**: The initial attempts using basic parsing on OCR outputs was highly inaccurate as the receipts from different stores were in different formats, leading to incorrect item extraction.
   - **Learning**: A well-trained, context-aware AI-model which supports vision tooling is far superior to simple regex-based parsing. Crafting a good prompt to instruct it on language, currency and **JSON format output** helped me delegate the complex parsing logic to the AI. This dramatically **improved accuracy**. 
 
 ### React State Management and Component Structure
+
   - **Problem**: In the earlier stages, all logic was in a single file making it hard to manage. A bug where old items persisted after a new upload highlighted this issue.
   - **Learning**: Breaking the UI down into smaller, single-responsibility components makes the code cleaner and easier to debug. 
 
