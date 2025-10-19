@@ -21,7 +21,7 @@ The app can then calculate the split and show how much each person owes.
 - API Key Validation
 - Responsive Design
 
-| ![API Key](./images/result.png) | ![Upload](./images/upload.png)     |
+| ![API Key](./images/api_key.png) | ![Upload](./images/upload.png)     |
 | --- | --- |
 | ![Items](./images/items.png)     | ![Result](./images/result.png)     |
 
