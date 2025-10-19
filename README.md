@@ -38,6 +38,15 @@ npm install
 npm run dev
 ```
 
+> Run this project in docker
+
+```bash
+git clone git@github.com:pinnheads/bill-split.git
+cd bill-split
+docker build . -t "bill-splitter-app"
+docker run -p 3000:3000 bill-splitter-app
+```
+
 ## ToDo's
 
 - [x] Add the screen to add persons to split between
@@ -45,9 +54,9 @@ npm run dev
 - [x] Add the screen to that shows each item as a list
 - [x] Add the calculation logic
 - [x] Add the Google Cloud API logic
-- [ ] Add notification after scanning process starts
-- [ ] Add safety checks and error handling
-- [ ] Make it self-hostable
+- [x] Add notification after scanning process starts
+- [ ] Add some tests for basic functionality
+- [x] Make it self-hostable
 
 ## Challenges and Learnings
 
