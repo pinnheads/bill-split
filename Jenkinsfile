@@ -24,6 +24,7 @@ pipeline {
             steps {
                 echo "Building ${env.APP_NAME} v${env.VERSION}..."
                 sh 'npm install'
+                echo "Build Finished..."
             }
         }
         stage('Test') {
