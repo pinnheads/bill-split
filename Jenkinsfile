@@ -10,6 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "Checking out ${env.APP_NAME} v${env.VERSION}"
+                echo "Running on branch: ${env.GIT_BRANCH}"
                 checkout scm
             }
         }
