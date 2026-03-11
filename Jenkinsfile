@@ -38,6 +38,14 @@ pipeline {
                 }
             }
         }
+        stage('Use Secret') {
+          steps {
+              withCredentials([string(credentialsId: 'api-key', variable: 'API_KEY')]) {
+                  sh 'echo "API Key is: $API_KEY"'
+                  sh 'echo "Calling API with secret..."'
+              }
+          }
+        }
     }
 
     post {
