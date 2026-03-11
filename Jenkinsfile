@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+
     environment {
         APP_NAME = 'bill-split'
         VERSION = "1.0.${env.BUILD_NUMBER}"
@@ -18,7 +23,6 @@ pipeline {
                 script {
                     docker.image('node:20-alpine').inside {
                         sh 'node --version'
-                        sh 'npm --version'
                         sh 'npm install'
                         sh 'npm run build --if-present'
                     }
@@ -44,7 +48,8 @@ pipeline {
             echo "Pipeline failed at build ${env.BUILD_NUMBER} — check logs"
         }
         always {
-            echo 'Pipeline finished.'
+            cleanWs()
+            echo 'Workspace cleaned up.'
         }
     }
 }
