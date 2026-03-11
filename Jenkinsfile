@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        dockerContainer {
-            image 'node:20-alpine'
-          }
-      }
+    agent any
 
     environment {
         APP_NAME = 'bill-split'
@@ -13,30 +9,29 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo "Checking out ${env.APP_NAME} v${env.VERSION}"
-                echo "Running on branch: ${env.GIT_BRANCH}"
                 checkout scm
+                echo "Checking out ${env.APP_NAME} v${env.VERSION}"
             }
         }
-        stage('Install Dependencies') {
+        stage('Install & Build') {
             steps {
-                echo 'Installing Node dependencies...'
-                sh 'node --version'
-                sh 'npm --version'
-            }
-        }
-        stage('Build') {
-            steps {
-                echo "Building ${env.APP_NAME} v${env.VERSION}..."
-                sh 'npm install'
-                echo "Build Finished..."
+                script {
+                    docker.image('node:20-alpine').inside {
+                        sh 'node --version'
+                        sh 'npm --version'
+                        sh 'npm install'
+                        sh 'npm run build --if-present'
+                    }
+                }
             }
         }
         stage('Test') {
             steps {
-                echo 'Running tests...'
-                sh 'npm test --if-present'
-                echo "Tests Finished!"
+                script {
+                    docker.image('node:20-alpine').inside {
+                        sh 'npm test --if-present'
+                    }
+                }
             }
         }
     }
