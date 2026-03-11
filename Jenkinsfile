@@ -37,6 +37,7 @@ pipeline {
             steps {
                 echo 'Running tests...'
                 sh 'npm test --if-present'
+                echo "Tests Finished!"
             }
         }
     }
