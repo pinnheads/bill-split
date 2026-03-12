@@ -17,16 +17,11 @@ pipeline {
             defaultValue: true,
             description: 'Run test suite?'
         )
-        string(
-            name: 'CUSTOM_VERSION',
-            defaultValue: '',
-            description: 'Override version (leave empty for auto)'
-        )
     }
 
     environment {
         APP_NAME = 'bill-split'
-        VERSION = "${params.CUSTOM_VERSION ?: "1.0.${env.BUILD_NUMBER}"}"
+        VERSION = "1.0.${env.BUILD_NUMBER}"
     }
 
     stages {
@@ -34,27 +29,58 @@ pipeline {
             steps {
                 checkout scm
                 echo "Checking out ${env.APP_NAME} v${env.VERSION}"
-                echo "Deploying to: ${params.DEPLOY_ENV}"
             }
         }
-        stage('Install & Build') {
+        stage('Install') {
             steps {
                 script {
                     docker.image('node:20-alpine').inside {
                         sh 'npm install'
-                        sh 'npm run build --if-present'
                     }
                 }
             }
         }
-        stage('Test') {
+        stage('Quality Checks') {
             when {
                 expression { return params.RUN_TESTS }
             }
+            parallel {
+                stage('Unit Tests') {
+                    steps {
+                        script {
+                            docker.image('node:20-alpine').inside {
+                                sh 'npm test --if-present'
+                            }
+                        }
+                    }
+                }
+                stage('Security Scan') {
+                    steps {
+                        echo 'Running npm security audit...'
+                        script {
+                            docker.image('node:20-alpine').inside {
+                                sh 'npm audit --audit-level=high --if-present || true'
+                            }
+                        }
+                    }
+                }
+                stage('Code Quality') {
+                    steps {
+                        echo 'Checking code quality...'
+                        script {
+                            docker.image('node:20-alpine').inside {
+                                sh 'npm run lint --if-present || true'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        stage('Build') {
             steps {
                 script {
                     docker.image('node:20-alpine').inside {
-                        sh 'npm test --if-present'
+                        sh 'npm run build --if-present'
                     }
                 }
             }
@@ -62,9 +88,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo "Deploying ${env.APP_NAME} v${env.VERSION} to ${params.DEPLOY_ENV}..."
-                withCredentials([string(credentialsId: 'api-key', variable: 'API_KEY')]) {
-                    sh 'echo "Deploying with credentials to ${DEPLOY_ENV}..."'
-                }
             }
         }
     }
