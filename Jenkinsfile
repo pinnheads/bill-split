@@ -9,7 +9,6 @@ pipeline {
     parameters {
         choice(
             name: 'DEPLOY_ENV',
-            defaultValue: 'dev'
             choices: ['production', 'dev'],
             description: 'Environment to deploy'
         )
