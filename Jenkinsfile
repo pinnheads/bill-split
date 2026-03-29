@@ -62,7 +62,7 @@ pipeline {
                         echo 'Running npm security audit...'
                         script {
                             docker.image('node:20-alpine').inside {
-                                sh 'npm audit --audit-level=high --if-present'
+                                sh 'npm audit --audit-level=high'
                             }
                         }
                     }
@@ -83,7 +83,7 @@ pipeline {
             steps {
                 echo "Deploying ${env.APP_NAME} v${env.VERSION} to ${params.DEPLOY_ENV}..."
                 script {
-                    docker.image('node:20-alpine').inside {
+                    docker.image('node:20-alpine').inside("-e CLOUDFLARE_API_TOKEN=${env.CLOUDFLARE_API_TOKEN} -e CLOUDFLARE_ACCOUNT_ID=${env.CLOUDFLARE_ACCOUNT_ID}") {
                         sh "npm run build --if-present && npx wrangler pages deploy ./dist --project-name=$CLOUDFLARE_PROJECT_NAME"
                     }
                 }
