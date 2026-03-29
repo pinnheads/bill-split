@@ -24,7 +24,7 @@ pipeline {
         VERSION = "1.0.${env.BUILD_NUMBER}"
         CLOUDFLARE_API_TOKEN = credentials('CLOUDFLARE_API_TOKEN')
         CLOUDFLARE_ACCOUNT_ID = credentials('CLOUDFLARE_ACCOUNT_ID')
-        CLOUDFLARE_PROJECT_NAME = 'jenkins-bill-split'
+        CLOUDFLARE_PROJECT_NAME = 'bill-splitter-app'
     }
 
     stages {
