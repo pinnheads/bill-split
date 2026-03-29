@@ -55,7 +55,7 @@ export const callVisionApi = async (base64Data, apiKey) => {
     try {
         const jsonString = text.match(/```json\n([\s\S]*?)\n```/)[1];
         return JSON.parse(jsonString);
-    } catch (e) {
+    } catch {
         console.error("Failed to parse JSON from AI response.", text);
         throw new Error("The AI returned a response in an invalid format. Please try scanning again");
     }

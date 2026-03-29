@@ -17,8 +17,6 @@ export default function Calculator() {
   const [items, setItems] = useState([]);
   const [results, setResults] = useState(null);
   const { showNotification, hideNotification } = useNotification();
-  let currency = '';
-
   const { apiKey, clearApiKey } = useApiKey();
   const maskedKey = apiKey.length > 3
     ? "•".repeat(apiKey.length - 3) + apiKey.slice(-3) // hide everything except last 3
@@ -74,7 +72,7 @@ export default function Calculator() {
       if (item.assignedTo === 'common') {
         commonTotal += price;
       } else {
-        if (totals.hasOwnProperty(item.assignedTo)) {
+        if (Object.hasOwn(totals, item.assignedTo)) {
           totals[item.assignedTo] += price;
         }
       }

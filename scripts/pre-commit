@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+echo "Running pre-commit checks..."
+
+echo ">> npm run test"
+npm run test
+
+echo ">> npm audit --audit-level=high"
+npm audit --audit-level=high
+
+echo ">> npm run lint"
+npm run lint
+
+echo ">> npm run build"
+npm run build
+
+echo "All pre-commit checks passed."

@@ -25,7 +25,7 @@ export default function NotificationModal() {
     error: {
       bgColor: 'bg-indian-red',
       borderColor: 'border-indian-red',
-      textColor: 'text-indian-red',
+      textColor: 'text-charcoal',
       icon: '❌'
     },
   };

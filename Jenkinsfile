@@ -9,8 +9,9 @@ pipeline {
     parameters {
         choice(
             name: 'DEPLOY_ENV',
-            choices: ['staging', 'production', 'dev'],
-            description: 'Environment to deploy to'
+            defaultValue: 'dev'
+            choices: ['production', 'dev'],
+            description: 'Environment to deploy'
         )
         booleanParam(
             name: 'RUN_TESTS',
@@ -59,7 +60,7 @@ pipeline {
                         echo 'Running npm security audit...'
                         script {
                             docker.image('node:20-alpine').inside {
-                                sh 'npm audit --audit-level=high --if-present || true'
+                                sh 'npm audit --audit-level=high --if-present'
                             }
                         }
                     }
@@ -69,7 +70,7 @@ pipeline {
                         echo 'Checking code quality...'
                         script {
                             docker.image('node:20-alpine').inside {
-                                sh 'npm run lint --if-present || true'
+                                sh 'npm run lint --if-present'
                             }
                         }
                     }

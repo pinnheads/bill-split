@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "test": "vitest run",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prestart": "cp scripts/pre-commit .git/hooks && chmod +x .git/hooks/pre-commit && echo 'hook copied'"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",

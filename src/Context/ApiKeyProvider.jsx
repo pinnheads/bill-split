@@ -15,7 +15,7 @@ export function ApiKeyProvider({ children }) {
         try {
             if (apiKey) localStorage.setItem("user_api_key", apiKey);
             else localStorage.removeItem("user_api_key");
-        } catch { }
+        } catch { /* ignore localStorage errors */ }
     }, [apiKey]);
 
     const clearApiKey = () => setApiKey("");
@@ -27,6 +27,7 @@ export function ApiKeyProvider({ children }) {
     );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useApiKey() {
     const ctx = useContext(ApiKeyContext);
     if (!ctx) throw new Error("useAPIKey must be used within ApiKeyProvider");
