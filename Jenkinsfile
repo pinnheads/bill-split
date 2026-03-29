@@ -23,6 +23,9 @@ pipeline {
     environment {
         APP_NAME = 'bill-split'
         VERSION = "1.0.${env.BUILD_NUMBER}"
+        CLOUDFLARE_API_TOKEN = credentials('CLOUDFLARE_API_TOKEN')
+        CLOUDFLARE_ACCOUNT_ID = credentials('CLOUDFLARE_ACCOUNT_ID')
+        CLOUDFLARE_PROJECT_NAME = 'jenkins-bill-split'
     }
 
     stages {
@@ -36,7 +39,7 @@ pipeline {
             steps {
                 script {
                     docker.image('node:20-alpine').inside {
-                        sh 'npm install'
+                        sh 'npm ci'
                     }
                 }
             }
@@ -77,18 +80,15 @@ pipeline {
                 }
             }
         }
-        stage('Build') {
-            steps {
-                script {
-                    docker.image('node:20-alpine').inside {
-                        sh 'npm run build --if-present'
-                    }
-                }
-            }
-        }
-        stage('Deploy') {
+        stage('Build & Deploy') {
             steps {
                 echo "Deploying ${env.APP_NAME} v${env.VERSION} to ${params.DEPLOY_ENV}..."
+                script {
+                    docker.image('node:20-alpine').inside {
+                        sh "npm run build --if-present && npx wrangler pages deploy ./dist --project-name=$CLOUDFLARE_PROJECT_NAME"
+                    }
+                }
+
             }
         }
     }
